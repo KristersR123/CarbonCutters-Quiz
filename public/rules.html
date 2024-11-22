@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Join the Carbon Cutters carpooling quiz and learn how to reduce your carbon footprint while traveling!">
-    <title>Carbon Cutters</title>
+    <meta name="description" content="Learn the rules and strategies for the Carbon Cutters carpooling quiz.">
+    <title>Carbon Cutters - Rules</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             font-family: 'Bebas Neue', sans-serif;
-            background: #65A579; /* Greenish main background */
-            color: #2ecc71; /* Green text */
+            background: #65A579; 
+            color: #2ecc71; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,7 +21,7 @@
 
         .background-image {
             position: absolute;
-            bottom: -100%; /* Start off-screen */
+            bottom: -100%;
             left: 0;
             width: 100%;
             height: 100%;
@@ -33,7 +33,7 @@
 
         .container {
             position: relative;
-            z-index: 1; /* Bring the content above the background image */
+            z-index: 1; 
             text-align: center;
             padding: 40px;
             background: rgba(0, 0, 0, 0.7);
@@ -46,49 +46,50 @@
         h1 {
             font-size: 4rem;
             margin-bottom: 20px;
-            color: #2ecc71; /* Green text */
+            color: #2ecc71; 
             text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
         }
 
-        p {
+        ul {
+            list-style-type: none;
+            padding: 0;
             font-size: 1.5rem;
             margin-bottom: 30px;
         }
 
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        li {
+            margin: 10px 0;
+            line-height: 1.5;
         }
 
-        .quiz-button {
-            padding: 20px 40px;
+        .back-button {
+            padding: 15px 30px;
             font-size: 1.5rem;
             border: none;
             border-radius: 10px;
-            background: #2ecc71; /* Bright green */
+            background: #2ecc71; 
             color: #333;
             cursor: pointer;
             box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .quiz-button:hover {
-            transform: scale(1.2); /* Enlarged state */
+        .back-button:hover {
+            transform: scale(1.2); 
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.7);
         }
 
-        .quiz-button:active {
-            transform: scale(1); /* Pressed state */
+        .back-button:active {
+            transform: scale(1); 
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
         }
 
         @keyframes slide-up {
             0% {
-                bottom: -100%; /* Start completely off-screen */
+                bottom: -100%; 
             }
             100% {
-                bottom: 0; /* End at normal position */
+                bottom: 0; 
             }
         }
     </style>
@@ -96,22 +97,19 @@
 <body>
     <div class="background-image"></div>
     <div class="container">
-        <h1>Carbon Cutters</h1>
-        <p>Welcome to the Carbon Cutters Carpooling Quiz</p>
-        <div class="button-group">
-            <button class="quiz-button" onclick="startQuiz()" aria-label="Start Quiz">Start</button>
-            <button class="quiz-button" onclick="showRules()" aria-label="View Rules">Rules</button>
-        </div>
+        <h1>Quiz Rules</h1>
+        <ul>
+            <li>Answer all questions to the best of your ability.</li>
+            <li>You cannot skip a question, all questions are mandatory.</li>
+            <li>Scoring is based on the number of correct answers.</li>
+            <li>Once submitted, answers cannot be changed.</li>
+        </ul>
+        <button class="back-button" onclick="goBack()">Back to Home</button>
     </div>
     <script>
-        function startQuiz() {
-            // Redirect to the quiz page
-            window.location.href = 'startQuiz.html';
-        }
-
-        function showRules() {
-            // Redirect to the rules page
-            window.location.href = 'rules.html';
+        function goBack() {
+            // Redirect to the home page
+            window.location.href = 'index.html';
         }
     </script>
 </body>

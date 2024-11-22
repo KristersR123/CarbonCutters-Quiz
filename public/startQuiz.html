@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Cutters Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        
+        body {
+            margin: 0;
+            font-family: 'Bebas Neue', sans-serif;
+            background: #65A579; 
+            color: #2ecc71; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-image {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('background.png') no-repeat center center;
+            background-size: cover;
+            z-index: 0;
+            animation: slide-up 1s ease-out forwards;
+        }
+
+        
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #2ecc71;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .answer {
+            padding: 15px;
+            font-size: 1.2rem;
+            background: #bdc3c7; 
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .answer:hover {
+            background-color: #95a5a6; 
+            transform: scale(1.05);
+        }
+
+        .answer.correct {
+            background-color: #2ecc71; 
+        }
+
+  
+        .answer.incorrect {
+            background-color: #e74c3c; 
+        }
+        .answer:focus, .answer:active {
+            outline: none; 
+            background-color: initial;
+        }
+
+        .fun-fact {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #f1c40f;
+        }
+
+        #next-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #2ecc71; 
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+            margin-top: 20px; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+            opacity: 1;
+        }
+
+        #next-button:hover {
+            background-color: #27ae60; 
+            transform: scale(1.05);
+        }
+
+        #next-button:disabled {
+            background-color: #7f8c8d; 
+            cursor: not-allowed;
+        }
+
+        #next-button:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.7); 
+        }
+
+        @keyframes slide-up {
+            0% {
+                bottom: -100%;
+            }
+            100% {
+                bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="container">
+        <h1>Carbon Cutters Quiz</h1>
+        <p>Test your knowledge on carpooling and sustainability!</p>
+        <div id="quiz-container">
+            <div class="question" id="question-text">Question 1: X?</div>
+            <div class="answers" id="answers-container">
+                <!-- Answers dynamically inserted -->
+            </div>
+            <div class="fun-fact" id="fun-fact"></div>
+            <button id="next-button" style="display:none;">Next Question</button>
+        </div>
+    </div>
+    <script>
+        // Quiz Data
+        const quizData = [
+            {
+                question: "What percentage of student respondents said they would be interested in carpooling?",
+                answers: ["40%", "69%", "57%", "22%"],
+                correctIndex: 2,
+                funFact: "Carpooling can save more than 1.6 million tons of CO2 per year by taking cars off the road. - (BlaBla Car)"
+            },
+            {
+                question: "What percentage of respondents use a single-occupant car to commute to campus?",
+                answers: ["33%", "29%", "39%", "18%"],
+                correctIndex: 0,
+                funFact: "If everyone commutes using carpools, approximately 780,000 fewer vehicle trips per day would occur, resulting in a savings of over 336.53 million liters of fuel annually. - (Energy Theory)"
+            },
+            {
+                question: "True or False: Over half of the survey respondents showed an interest in carpooling as either a driver or a passenger.",
+                answers: ["True", "False"],
+                correctIndex: 0,
+                funFact: "When more people share rides, there are fewer cars on the road, leading to less congestion and carbon being emmited. - (Energy Theory)"
+            },
+            {
+                question: "Which campus initiative might encourage more people to carpool?",
+                answers: ["Improved cycle parking", "Sustainable Travel Allowance", "Discounted public transport tickets"],
+                correctIndex: 1,
+                funFact: "Carpooling can reduce the stress of driving alone, especially in heavy traffic. Passengers can relax, read, or even nap, making the commute more enjoyable. - (Faster Capital)"
+            },
+            {
+                question: "Which of the following is a reason respondents might choose to carpool? ",
+                answers: ["To save money on travel costs", "To share driving responsibilities", "To reduce environmental impact", "All of the above "],
+                correctIndex: 3,
+                funFact: "Reducing car emissions improves air quality, which has a direct positive impact on public health, particularly by lowering rates of respiratory diseases caused by air pollution - (ScienceDirect)"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        const questionText = document.getElementById('question-text');
+        const answersContainer = document.getElementById('answers-container');
+        const funFactContainer = document.getElementById('fun-fact');
+        const nextButton = document.getElementById('next-button');
+
+        function loadQuestion() {
+            const currentQuestion = quizData[currentQuestionIndex];
+            questionText.textContent = currentQuestion.question;
+            answersContainer.innerHTML = ''; 
+            funFactContainer.textContent = ''; 
+
+            currentQuestion.answers.forEach((answer, index) => {
+                const answerButton = document.createElement('button');
+                answerButton.classList.add('answer');
+                answerButton.textContent = answer;
+
+                answerButton.addEventListener('click', () => handleAnswer(index, currentQuestion.correctIndex, currentQuestion.funFact));
+
+                answersContainer.appendChild(answerButton);
+            });
+
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextButton.textContent = "Play Challenge"; 
+            } else {
+                nextButton.textContent = "Next Question"; 
+            }
+        }
+
+        function handleAnswer(selectedIndex, correctIndex, funFact) {
+            const answerButtons = answersContainer.querySelectorAll('.answer');
+            answerButtons.forEach((button, index) => {
+                button.disabled = true; 
+                if (index === correctIndex) {
+                    button.classList.add('correct'); 
+                }
+            });
+
+            if (selectedIndex !== correctIndex) {
+                answerButtons[selectedIndex].classList.add('incorrect'); 
+            }
+
+            funFactContainer.textContent = funFact; 
+            nextButton.style.display = 'inline-block'; 
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+                nextButton.style.display = 'none'; 
+            } else {
+                window.location.href = 'challenge.html'; 
+            }
+        }
+
+        nextButton.addEventListener('click', nextQuestion);
+
+        // Load the first question
+        loadQuestion();
+    </script>
+</body>
+</html>
