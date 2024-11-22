@@ -1,3 +1,4 @@
+// Initialize Firebase
 var firebaseConfig = {
     apiKey: "AIzaSyAAVtk6bN0lQonLP8z6STdPV2CTkFrNZS0",
     authDomain: "carboncutters-87a2d.firebaseapp.com",
@@ -20,45 +21,64 @@ function drag(event) {
 function drop(event) {
     event.preventDefault();
     var data = event.dataTransfer.getData("text");
-    event.target.appendChild(document.getElementById(data));
+    var person = document.getElementById(data);
+    var target = event.target;
+
+    // Check if the target car can still accept passengers
+    if (target.className.includes("car") && !target.classList.contains('locked')) {
+        if (target.children.length < 2) {
+            target.appendChild(person);
+            updateEmissions();
+            if (target.children.length === 2) {
+                lockOtherCar(target);
+                document.getElementById('successSound').play();
+                document.querySelector('.game-container').classList.add('success-background');
+            }
+        } else {
+            alert("This car is full.");
+        }
+    }
 }
 
-function calculateEmissions() {
-    const car = document.getElementById('car');
-    const bus = document.getElementById('bus');
-    const numInCar = car.getElementsByTagName('div').length;
-    const numInBus = bus.getElementsByTagName('div').length;
-    const carEmissions = numInCar * 0.24; // Assuming 0.24kg CO2 per km per person
-    const busEmissions = 0.98; // Assuming 0.98kg CO2 per km, regardless of number of passengers
-    const results = document.getElementById('results');
-    results.innerHTML = `Total Car Emissions: ${carEmissions.toFixed(2)}kg CO2<br>` +
-                        `Total Bus Emissions: ${busEmissions.toFixed(2)}kg CO2 per km`;
-}
-function calculateScore() {
-    let score = 0;
+function lockOtherCar(filledCar) {
     const cars = document.querySelectorAll('.car');
     cars.forEach(car => {
-        if (car.children.length > 0) {
-            score += (20 - 5 * car.children.length);
+        if (car.id !== filledCar.id) {
+            car.classList.add('locked'); // Lock the empty car
         }
     });
-    document.getElementById('score').textContent = 'Score: ' + score;
-    saveScore(score); // Save the score to Firebase
 }
 
-// Firebase functions
-function saveScore(score) {
-    firebase.database().ref('scores/' + new Date().toISOString()).set({
-        score: score
-    }).catch(error => {
-        console.error('Error writing new message to Realtime Database:', error);
-    });
-}
+function updateEmissions() {
+    const cars = document.querySelectorAll('.car');
+    const distance = 100; // Assuming distance traveled
+    const emissionsPerKmPerCar = 0.24; // Emissions per km per car
 
-function getScores() {
-    const scoresRef = firebase.database().ref('scores/');
-    scoresRef.on('value', (snapshot) => {
-        const data = snapshot.val();
-        console.log(data);
+    let totalEmissions = 0;
+    cars.forEach(car => {
+        if (car.children.length > 0) {
+            totalEmissions += emissionsPerKmPerCar * distance;
+        }
     });
+
+    let potentialEmissions = cars.length * emissionsPerKmPerCar * distance; // Emissions if both drove separately
+    let savings = potentialEmissions - totalEmissions;
+    document.getElementById('results').innerHTML = `<strong>Emissions with current setup:</strong> ${totalEmissions.toFixed(2)} kg CO2<br>` +
+                                                    `<strong>Potential emissions if driving separately:</strong> ${potentialEmissions.toFixed(2)} kg CO2<br>` +
+                                                    `<strong>Savings by current setup:</strong> ${savings.toFixed(2)} kg CO2`;
+}
+function resetGame() {
+    const people = document.getElementById('people');
+    document.querySelectorAll('.person').forEach(person => {
+        people.appendChild(person); // Move all persons back to the start area
+    });
+
+    const cars = document.querySelectorAll('.car');
+    cars.forEach(car => {
+        car.classList.remove('locked');
+        car.innerHTML = ''; // Clear the car
+    });
+
+    document.querySelector('.game-container').classList.remove('success-background');
+    document.getElementById('results').textContent = '';
 }
