@@ -22,54 +22,59 @@
         animation: slide-up 1s ease-out forwards;
     }
 
-    .container {
-        width: 90%;
-        margin: auto;
-        text-align: center;
-        position: relative;
-        z-index: 1;
-        padding: 40px;
-        background: rgba(0, 0, 0, 0.7);
-        border-radius: 20px;
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
-    }
+    body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .person, .car, .bus {
-        border: 2px solid black;
-        padding: 10px;
-        width: 100px;
-        margin: 10px;
-        display: inline-block;
-        cursor: pointer;
-    }
+.game-container {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 
-    .car, .bus {
-        height: 50px;
-        background-color: lightblue;
-    }
+.vehicle, .person {
+    padding: 10px;
+    margin: 10px;
+    background-color: #ddd;
+    cursor: pointer;
+    user-select: none;
+}
 
-    .person {
-        background-color: lightcoral;
-    }
+.vehicle {
+    width: 200px;
+    min-height: 50px;
+    color: #333;
+    border: 2px dashed #666;
+}
 
-    #people, #vehicles {
-        margin-bottom: 20px;
-    }
+.person {
+    display: inline-block;
+    background-color: #76b5c5;
+    border: 1px solid #333;
+}
 </style>
 
 </head>
 <body>
 <div class="background-image"></div>
-<div class="container">
-    <h2>Drag people into vehicles</h2>
-    <div id="people">
-        <div class="person" draggable="true" id="person1">Person 1</div>
-        <div class="person" draggable="true" id="person2">Person 2</div>
-        <div class="person" draggable="true" id="person3">Person 3</div>
-    </div>
+<div class="game-container">
+    <h1>Reduce Emissions Game</h1>
     <div id="vehicles">
-        <div class="car" id="car1">Car 1</div>
-        <div class="bus" id="bus1">Bus 1</div>
+        <div id="car" class="vehicle" ondrop="drop(event)" ondragover="allowDrop(event)">Car (up to 4 people)</div>
+        <div id="bus" class="vehicle" ondrop="drop(event)" ondragover="allowDrop(event)">Bus (up to 40 people)</div>
+    </div>
+    <div id="passengers">
+        <div id="person1" class="person" draggable="true" ondragstart="drag(event)">Person 1</div>
+        <div id="person2" class="person" draggable="true" ondragstart="drag(event)">Person 2</div>
+        <div id="person3" class="person" draggable="true" ondragstart="drag(event)">Person 3</div>
     </div>
     <button onclick="calculateEmissions()">Calculate Emissions</button>
     <div id="results"></div>

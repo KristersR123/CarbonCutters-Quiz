@@ -9,38 +9,31 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-// Selectors and event listeners
-document.querySelectorAll('.person').forEach(person => {
-    person.addEventListener('dragstart', function(e) {
-        e.dataTransfer.setData('text', e.target.id);
-    });
-});
-
-document.querySelectorAll('.car, .bus').forEach(vehicle => {
-    vehicle.addEventListener('dragover', function(e) {
-        e.preventDefault(); // Allow drop
-    });
-
-    vehicle.addEventListener('drop', function(e) {
-        e.preventDefault();
-        const id = e.dataTransfer.getData('text');
-        const person = document.getElementById(id);
-        if (!this.contains(person)) {
-            this.appendChild(person);
-        }
-    });
-});
-
-function calculateEmissions() {
-    let carPassengers = document.getElementById('car1').children.length;
-    let busPassengers = document.getElementById('bus1').children.length;
-    let carEmissions = 0.24 * 10 * carPassengers; // Car emits 0.24kg CO2 per km per person, assume 10 km
-    let busEmissions = 0.98 * 10; // Bus emits 0.98kg CO2 per km, assume 10 km, divided by number of passengers
-
-    let results = `Car emissions total: ${carEmissions.toFixed(2)}kg CO2, Bus emissions per passenger: ${(busEmissions / (busPassengers || 1)).toFixed(2)}kg CO2 per passenger.`;
-    document.getElementById('results').textContent = results;
+function allowDrop(event) {
+    event.preventDefault();
 }
 
+function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+}
+
+function drop(event) {
+    event.preventDefault();
+    var data = event.dataTransfer.getData("text");
+    event.target.appendChild(document.getElementById(data));
+}
+
+function calculateEmissions() {
+    const car = document.getElementById('car');
+    const bus = document.getElementById('bus');
+    const numInCar = car.getElementsByTagName('div').length;
+    const numInBus = bus.getElementsByTagName('div').length;
+    const carEmissions = numInCar * 0.24; // Assuming 0.24kg CO2 per km per person
+    const busEmissions = 0.98; // Assuming 0.98kg CO2 per km, regardless of number of passengers
+    const results = document.getElementById('results');
+    results.innerHTML = `Total Car Emissions: ${carEmissions.toFixed(2)}kg CO2<br>` +
+                        `Total Bus Emissions: ${busEmissions.toFixed(2)}kg CO2 per km`;
+}
 function calculateScore() {
     let score = 0;
     const cars = document.querySelectorAll('.car');
