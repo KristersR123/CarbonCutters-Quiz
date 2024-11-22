@@ -82,89 +82,15 @@ p, .results {
     outline: none;
     box-shadow: 0 0 10px rgba(46, 204, 113, 0.7);
 }
-        .question {
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            color: #ffffff;
-        }
 
-        .answers {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .answer {
-            padding: 15px;
-            font-size: 1.2rem;
-            background: #bdc3c7; 
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .answer:hover {
-            background-color: #95a5a6; 
-            transform: scale(1.05);
-        }
-
-        .answer.correct {
-            background-color: #2ecc71; 
-        }
-
-  
-        .answer.incorrect {
-            background-color: #e74c3c; 
-        }
-        .answer:focus, .answer:active {
-            outline: none; 
-            background-color: initial;
-        }
-
-        .fun-fact {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            color: #f1c40f;
-        }
-
-        #next-button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            background-color: #2ecc71; 
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-block;
-            margin-top: 20px; 
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
-            opacity: 1;
-        }
-
-        #next-button:hover {
-            background-color: #27ae60; 
-            transform: scale(1.05);
-        }
-
-        #next-button:disabled {
-            background-color: #7f8c8d; 
-            cursor: not-allowed;
-        }
-
-        #next-button:focus {
-            outline: none;
-            box-shadow: 0 0 10px rgba(46, 204, 113, 0.7); 
-        }
-
-        @keyframes slide-up {
-            0% {
-                bottom: -100%;
-            }
-            100% {
-                bottom: 0;
-            }
-        }
+@keyframes slide-up {
+    0% {
+        bottom: -100%;
+    }
+    100% {
+        bottom: 0;
+    }
+}
 
 .car, .person {
     padding: 10px;
@@ -172,21 +98,25 @@ p, .results {
     background-color: #ddd;
     cursor: pointer;
     user-select: none;
-    border: 2px solid #ccc;
+    border: none;
+    border-radius: 10px;
 }
 
 .car {
     width: 200px;
     min-height: 50px;
     color: #333;
-    border: 2px dashed #666;
     display: inline-block;
 }
 
 .person {
     display: inline-block;
-    background-color: #76b5c5;
+    background: #65A579; 
     border: 1px solid #333;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #people, #cars {
@@ -207,7 +137,7 @@ p, .results {
 <body>
     <div class="background-image"></div>
     <div class="game-container">
-        <h1>Carpool to Save Emissions</h1>
+        <h1>Game Challenge</h1>
         <p>Drag both passengers into one car to see how much CO2 you can save!</p>
         <div id="people">
             <div class="person" draggable="true" ondragstart="drag(event)" id="person1">Driver 1</div>
