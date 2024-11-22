@@ -1,4 +1,3 @@
-// Initialize Firebase
 var firebaseConfig = {
     apiKey: "AIzaSyAAVtk6bN0lQonLP8z6STdPV2CTkFrNZS0",
     authDomain: "carboncutters-87a2d.firebaseapp.com",
@@ -17,12 +16,12 @@ document.querySelectorAll('.person').forEach(person => {
     });
 });
 
-document.querySelectorAll('.car').forEach(car => {
-    car.addEventListener('dragover', function(e) {
+document.querySelectorAll('.car, .bus').forEach(vehicle => {
+    vehicle.addEventListener('dragover', function(e) {
         e.preventDefault(); // Allow drop
     });
 
-    car.addEventListener('drop', function(e) {
+    vehicle.addEventListener('drop', function(e) {
         e.preventDefault();
         const id = e.dataTransfer.getData('text');
         const person = document.getElementById(id);
@@ -31,6 +30,16 @@ document.querySelectorAll('.car').forEach(car => {
         }
     });
 });
+
+function calculateEmissions() {
+    let carPassengers = document.getElementById('car1').children.length;
+    let busPassengers = document.getElementById('bus1').children.length;
+    let carEmissions = 0.24 * 10 * carPassengers; // Car emits 0.24kg CO2 per km per person, assume 10 km
+    let busEmissions = 0.98 * 10; // Bus emits 0.98kg CO2 per km, assume 10 km, divided by number of passengers
+
+    let results = `Car emissions total: ${carEmissions.toFixed(2)}kg CO2, Bus emissions per passenger: ${(busEmissions / (busPassengers || 1)).toFixed(2)}kg CO2 per passenger.`;
+    document.getElementById('results').textContent = results;
+}
 
 function calculateScore() {
     let score = 0;

@@ -11,65 +11,68 @@
 
 <style>
     .background-image {
-                position: absolute;
-                bottom: -100%; /* Start off-screen */
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: url('background.png') no-repeat center center;
-                background-size: cover;
-                z-index: 0;
-                animation: slide-up 1s ease-out forwards;
-            }
-    
+        position: absolute;
+        bottom: -100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('background.png') no-repeat center center;
+        background-size: cover;
+        z-index: 0;
+        animation: slide-up 1s ease-out forwards;
+    }
+
     .container {
         width: 90%;
         margin: auto;
         text-align: center;
+        position: relative;
+        z-index: 1;
+        padding: 40px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 20px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
     }
-    
-    .person, .car {
+
+    .person, .car, .bus {
         border: 2px solid black;
         padding: 10px;
         width: 100px;
         margin: 10px;
         display: inline-block;
+        cursor: pointer;
     }
-    
-    .car {
+
+    .car, .bus {
         height: 50px;
         background-color: lightblue;
     }
-    
+
     .person {
         background-color: lightcoral;
-        cursor: pointer;
     }
-    
-    #people, #cars {
+
+    #people, #vehicles {
         margin-bottom: 20px;
     }
-    </style>
-    
+</style>
 
 </head>
 <body>
-
-    <div class="background-image"></div>
-
+<div class="background-image"></div>
 <div class="container">
-    <h2>Drag people into cars</h2>
+    <h2>Drag people into vehicles</h2>
     <div id="people">
         <div class="person" draggable="true" id="person1">Person 1</div>
         <div class="person" draggable="true" id="person2">Person 2</div>
         <div class="person" draggable="true" id="person3">Person 3</div>
     </div>
-    <div id="cars">
+    <div id="vehicles">
         <div class="car" id="car1">Car 1</div>
-        <div class="car" id="car2">Car 2</div>
+        <div class="bus" id="bus1">Bus 1</div>
     </div>
-    <button onclick="calculateScore()">Calculate Score</button>
-    <div id="score">Score: 0</div>
+    <button onclick="calculateEmissions()">Calculate Emissions</button>
+    <div id="results"></div>
 </div>
 <script src="script.js"></script>
 </body>
