@@ -18,13 +18,13 @@ function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
 }
 
+// Additional checks to ensure correct behavior on subsequent attempts
 function drop(event) {
     event.preventDefault();
     var data = event.dataTransfer.getData("text");
     var person = document.getElementById(data);
     var target = event.target;
 
-    // Check if the target car can still accept passengers
     if (target.className.includes("car") && !target.classList.contains('locked')) {
         if (target.children.length < 2) {
             target.appendChild(person);
@@ -33,6 +33,13 @@ function drop(event) {
                 lockOtherCar(target);
                 document.getElementById('successSound').play();
                 document.querySelector('.game-container').classList.add('success-background');
+                setTimeout(() => {
+                    document.getElementById('next-button').style.display = 'inline-block';  // Show the "Next" button after all transitions are complete
+                }, 500);  // Delay to ensure the background change and sound are noticed
+            }
+            // Check if both drivers are now in one car
+            if (target.children.length === 2 && (target.children[0].id !== target.children[1].id)) {
+                alert("Congratulations! You have saved emissions by carpooling :)");
             }
         } else {
             alert("This car is full.");
@@ -40,11 +47,12 @@ function drop(event) {
     }
 }
 
+// Make sure that locking other cars doesn't prevent future correct interactions
 function lockOtherCar(filledCar) {
     const cars = document.querySelectorAll('.car');
     cars.forEach(car => {
         if (car.id !== filledCar.id) {
-            car.classList.add('locked'); // Lock the empty car
+            car.classList.add('locked');  // Lock the other cars
         }
     });
 }
@@ -67,18 +75,29 @@ function updateEmissions() {
                                                     `<strong>Potential emissions if driving separately:</strong> ${potentialEmissions.toFixed(2)} kg CO2<br>` +
                                                     `<strong>Savings by current setup:</strong> ${savings.toFixed(2)} kg CO2`;
 }
+
+function goToNextChallenge() {
+    window.location.href = 'nextChallenge.html'; // Redirect to next challenge
+}
+
 function resetGame() {
     const people = document.getElementById('people');
-    document.querySelectorAll('.person').forEach(person => {
-        people.appendChild(person); // Move all persons back to the start area
-    });
-
     const cars = document.querySelectorAll('.car');
+
+    // Move all person elements back to the people container and unlock cars
     cars.forEach(car => {
-        car.classList.remove('locked');
-        car.innerHTML = ''; // Clear the car
+        Array.from(car.children).forEach(child => {
+            if (child.classList.contains('person')) {
+                people.appendChild(child);  // Move person back to the starting area
+            }
+        });
+        car.classList.remove('locked');  // Unlock the car
     });
 
+    // Reset visual elements and hide the "Next" button
     document.querySelector('.game-container').classList.remove('success-background');
-    document.getElementById('results').textContent = '';
+    document.getElementById('results').textContent = '';  // Clear results text
+    document.getElementById('next-button').style.display = 'none';  // Hide the "Next" button
+
+    // Optionally, reset emissions data or any other visual feedback
 }

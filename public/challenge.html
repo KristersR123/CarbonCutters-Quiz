@@ -137,8 +137,9 @@ p, .results {
 <body>
     <div class="background-image"></div>
     <div class="game-container">
-        <h1>Game Challenge</h1>
-        <p>Drag both passengers into one car to see how much CO2 you can save!</p>
+        <h1>Challenge</h1>
+        <p>Both Drivers Are Travelling An Hour To College</p>
+        <p>Drag & Drop A Way For Them To Decrease The Amount Of CO2 Used For The Travel</p>
         <div id="people">
             <div class="person" draggable="true" ondragstart="drag(event)" id="person1">Driver 1</div>
             <div class="person" draggable="true" ondragstart="drag(event)" id="person2">Driver 2</div>
@@ -149,6 +150,7 @@ p, .results {
         </div>
         <div class="results" id="results"></div>
         <button class="button" onclick="resetGame()">Reset Game</button>
+        <button class="button" id="next-button" style="display: none;" onclick="goToNextChallenge()">Continue</button>
         <audio id="successSound" src="cheer.mp3" type="audio/mp3"></audio>
     </div>
     <script src="script.js"></script>
