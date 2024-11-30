@@ -102,29 +102,23 @@ body {
     color: white;
     display: flex;
     align-items: center; /* Center vertically */
-    justify-content: space-between; /* Push items to opposite sides */
+    justify-content: center;
     padding: 0 20px; /* Add horizontal padding to ensure text stays within bounds */
     box-sizing: border-box; /* Ensure padding doesn't affect layout */
 }
 
-#score-display {
-    font-size: 18px;
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Ensure text doesn't overflow */
-    text-overflow: ellipsis; /* Show ellipsis if text is too long */
-}
-
 #continue-btn {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #2ecc71;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    
 }
 
 #continue-btn:hover {
-    background-color: #0056b3;
+    background-color: #27ae60;
 }
 
 
@@ -200,7 +194,7 @@ body {
 
     <!-- Score and Continue Button -->
     <div id="footer">
-        <div id="score-display">Current Score: </div>
+        <div id="score-display" style="visibility: hidden;">Current Score: </div>
         <button id="continue-btn">Continue</button>
     </div>
     <script src="script.js"></script>

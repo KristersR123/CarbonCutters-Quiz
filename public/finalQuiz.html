@@ -184,36 +184,36 @@
                 question: "How many carpooling parking spaces are available in the Moylish Campus?",
                 answers: ["0", "10", "20", "30"],
                 correctIndex: 1,
-                funFact: "The Moylish Campus has 10 parking spaces alocated for carpooling, However they are not setup properly yet as of 28/11/24"
+                funFact: "The Moylish Campus has 10 parking spaces allocated for carpooling."
             },
             {
-                question: "What percentage of students are within 5km from the Moylish Campus",
+                question: "What percentage of students are within 5km from the Moylish Campus?",
                 answers: ["27%", "32%", "37%", "42%"],
                 correctIndex: 2,
-                funFact: "63% of students have to commute to the moylish campus, there is a high chance that perticipents can commute together to the Campus"
+                funFact: "63% of students commute to Moylish, many within 5km."
             },
             {
-                question: "What percentage of students live within 400 meaters from a bus stop that goes to the Moylish Campus",
+                question: "What percentage of students live near a bus stop to Moylish?",
                 answers: ["68%", "72%", "75%", "88%"],
                 correctIndex: 1,
-                funFact: "There is 1 offical bus service thaat goes to the Moylish campus, which local bus service that does not leave the city"
+                funFact: "Most students have access to bus stops within walking distance."
             },
             {
-                question: "What percent of emmisions are reduced per person while carpooling",
-                answers: ["0-5", "5-10", "10-15", "15-20"],
+                question: "What percent of emissions are reduced per person while carpooling?",
+                answers: ["0-5%", "5-10%", "10-15%", "15-20%"],
                 correctIndex: 2,
-                funFact: "According to a study by UC Berkeley, car sharing reduces greenhouse gas emissions by 10 to 13 percent per user"
+                funFact: "Carpooling reduces emissions by 10-15% per user."
             },
             {
-            question: "What is the primary environmental benefit of carpooling to the Moylish Campus?",
-            answers: ["Reduced fuel consumption", "Lower greenhouse gas emissions", "Decreased traffic congestion", "Improved public health"],
-            correctIndex: 1,
-            funFact: "Carpooling reduces greenhouse gas emissions significantly. Sharing a car with others also reduces the number of vehicles on the road, leading to decreased fuel consumption and better air quality."
+                question: "What is the primary environmental benefit of carpooling?",
+                answers: ["Reduced fuel consumption", "Lower emissions", "Less congestion", "Improved health"],
+                correctIndex: 1,
+                funFact: "Carpooling significantly reduces greenhouse gas emissions."
             }
-            
         ];
 
         let currentQuestionIndex = 0;
+        let score = 0; // Initialize the score
 
         const questionText = document.getElementById('question-text');
         const answersContainer = document.getElementById('answers-container');
@@ -240,44 +240,42 @@
         }
 
         function handleAnswer(selectedIndex, correctIndex, funFact) {
-        const answerButtons = answersContainer.querySelectorAll('.answer');
+            const answerButtons = answersContainer.querySelectorAll('.answer');
 
-        answerButtons.forEach((button, index) => {
-        button.disabled = true;
-        if (index === correctIndex) {
-            button.classList.add('correct');
-            button.style.display = 'block';
-        } else if (index === selectedIndex) {
-            button.classList.add('incorrect'); 
-            button.style.display = 'block';
-        } else {
-            button.style.display = 'none'; 
+            answerButtons.forEach((button, index) => {
+                button.disabled = true;
+                if (index === correctIndex) {
+                    button.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    button.classList.add('incorrect');
+                }
+            });
+
+            funFactContainer.textContent = funFact;
+
+            if (selectedIndex === correctIndex) {
+                score += 7; // Add 7 points for each correct answer
+            }
+
+            nextButton.style.display = 'inline-block';
         }
-    });
-
-    funFactContainer.textContent = funFact;
-
-    nextButton.style.display = 'inline-block';
-}
-
-
-
 
         nextButton.addEventListener('click', () => {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < quizData.length) {
+            currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            loadQuestion();
+            nextButton.style.display = 'none';
+        } else {
+            localStorage.setItem('finalQuizScore', score); // Save final quiz score
+            const totalScore = 
+                (parseInt(localStorage.getItem('startQuizScore')) || 0) +
+                (parseInt(localStorage.getItem('challengeScore')) || 0) +
+                score; // Calculate total score
+            localStorage.setItem('totalScore', totalScore); // Save total score
+            window.location.href = 'viewScore.html'; // Redirect to the score page
+        }
+        });
+
         loadQuestion();
-        nextButton.style.display = 'none'; 
-    } else {
-        window.location.href = "Score.html";
-    }
-    });
-
-    loadQuestion(); 
-
-    document.addEventListener('DOMContentLoaded', () => {
-    const finalScore = localStorage.getItem('finalScore') || 0;
-    });
     </script>
-</body>
 </html>

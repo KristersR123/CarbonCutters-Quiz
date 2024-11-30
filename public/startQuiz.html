@@ -254,7 +254,7 @@
     });
 
     if (selectedIndex === correctIndex) {
-        score += 5; // Add 5 points for correct answer
+        score += 7; // Add 7 points for correct answer
     }
 
 
@@ -264,14 +264,19 @@
 }
 
         nextButton.addEventListener('click', () => {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < quizData.length) {
-        loadQuestion();
-        nextButton.style.display = 'none'; 
-    } else {
-        localStorage.setItem('score', score); // Save score to localStorage
-        window.location.href = "challenge.html"; // Redirect to challenge page
-    }
+            currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            loadQuestion();
+            nextButton.style.display = 'none';
+        } else {
+            localStorage.setItem('startQuizScore', score); // Save final quiz score
+            const totalScore = 
+                (parseInt(localStorage.getItem('startQuizScore')) || 0) +
+                (parseInt(localStorage.getItem('challengeScore')) || 0) +
+                score; // Calculate total score
+            localStorage.setItem('totalScore', totalScore); // Save total score
+            window.location.href = 'challenge.html'; // Redirect to the score page
+        }
         });
 
         loadQuestion(); 

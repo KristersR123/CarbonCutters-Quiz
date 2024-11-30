@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Score</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Bebas Neue', sans-serif;
+            background: #65A579;
+            color: #2ecc71;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-image {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('background.png') no-repeat center center;
+            background-size: cover;
+            z-index: 0;
+            animation: slide-up 1s ease-out forwards;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+            height: 620px;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #2ecc71;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .divider {
+            height: 2px;
+            width: 80%;
+            margin: 10px auto 20px;
+            background-color: #ffffff;
+        }
+
+        .score-section {
+            margin: 20px 0;
+        }
+
+        .score-section p {
+            font-size: 1.2rem;
+            margin: 5px 0;
+            color: #f1c40f;
+        }
+
+        .final-message {
+            font-size: 1.8rem;
+            margin-top: 20px;
+            color: #f1c40f;
+        }
+
+        .restart-btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .restart-btn:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+
+        @keyframes slide-up {
+            0% {
+                bottom: -100%;
+            }
+            100% {
+                bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="container">
+        <h1>Your Total Score</h1>
+        <div class="divider"></div>
+        <div class="score-section">
+            <p id="start-quiz-score"></p>
+            <p id="challenge-score"></p>
+            <p id="final-quiz-score"></p>
+            <p id="total-score"></p>
+        </div>
+        <p class="final-message" id="final-message"></p>
+        <button class="restart-btn" onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+    <script>
+        // Retrieve scores from localStorage
+        const startQuizScore = parseInt(localStorage.getItem('startQuizScore')) || 0;
+        const challengeScore = parseInt(localStorage.getItem('challengeScore')) || 0;
+        const finalQuizScore = parseInt(localStorage.getItem('finalQuizScore')) || 0;
+        const totalScore = startQuizScore + challengeScore + finalQuizScore; // Calculate total score
+
+        // Update score details
+        document.getElementById('start-quiz-score').textContent = `Start Quiz Score: ${startQuizScore} / 35`;
+        document.getElementById('challenge-score').textContent = `Challenge Score: ${challengeScore} / 30`;
+        document.getElementById('final-quiz-score').textContent = `Final Quiz Score: ${finalQuizScore} / 35`;
+        document.getElementById('total-score').textContent = `Total Score: ${totalScore} / 100`;
+
+        // Final message based on score
+        const finalMessage = document.getElementById('final-message');
+        if (totalScore >= 70) {
+            finalMessage.textContent = "You are a Carbon Warrior!";
+        } else {
+            finalMessage.textContent = "Keep trying! Every effort counts in saving the environment.";
+        }
+
+        // Restart quiz function
+        function restartQuiz() {
+            localStorage.clear(); // Clear scores
+            window.location.href = 'startQuiz.html'; // Redirect to the start
+        }
+    </script>
+</body>
+</html>

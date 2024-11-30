@@ -108,8 +108,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle "Continue" button click
     continueBtn.addEventListener('click', function () {
-        const totalScore = startQuizScore + carpoolScore;
-        localStorage.setItem('finalScore', totalScore); // Save the total score to localStorage
-        window.location.href = 'finalQuiz.html'; // Redirect to the next page
+        const totalScore = startQuizScore + carpoolScore; // Calculate total so far
+        localStorage.setItem('challengeScore', carpoolScore); // Save challenge score
+        localStorage.setItem('totalScore', totalScore); // Save the running total
+        window.location.href = 'finalQuiz.html'; // Redirect to the final quiz
     });
+    
 });
