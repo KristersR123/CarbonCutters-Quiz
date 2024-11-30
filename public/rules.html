@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn the rules and strategies for the Carbon Cutters carpooling quiz.">
+    <title>Carbon Cutters - Rules</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Bebas Neue', sans-serif;
+            background: #65A579; 
+            color: #2ecc71; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('background.png') no-repeat center center;
+            background-size: cover;
+            z-index: 0;
+            animation: slide-up 1s ease-out forwards;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1; 
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #2ecc71; 
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .back-button {
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 10px;
+            background: #2ecc71; 
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: scale(1.2); 
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        .back-button:active {
+            transform: scale(1); 
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slide-up {
+            0% {
+                bottom: -100%; 
+            }
+            100% {
+                bottom: 0; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="container">
+        <h1>Quiz Rules</h1>
+        <ul>
+            <li>Answer all questions to the best of your ability.</li>
+            <li>You cannot skip a question, all questions are mandatory.</li>
+            <li>Scoring is based on the number of correct answers.</li>
+            <li>Once submitted, answers cannot be changed.</li>
+        </ul>
+        <button class="back-button" onclick="goBack()">Back to Home</button>
+    </div>
+    <script>
+        function goBack() {
+            // Redirect to the home page
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

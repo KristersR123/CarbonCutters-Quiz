@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join the Carbon Cutters carpooling quiz and learn how to reduce your carbon footprint while traveling!">
+    <title>Carbon Cutters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Bebas Neue', sans-serif;
+            background: #65A579; /* Greenish main background */
+            color: #2ecc71; /* Green text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            bottom: -100%; /* Start off-screen */
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('background.png') no-repeat center center;
+            background-size: cover;
+            z-index: 0;
+            animation: slide-up 1s ease-out forwards;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1; /* Bring the content above the background image */
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #2ecc71; /* Green text */
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .quiz-button {
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 10px;
+            background: #2ecc71; /* Bright green */
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .quiz-button:hover {
+            transform: scale(1.2); /* Enlarged state */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        .quiz-button:active {
+            transform: scale(1); /* Pressed state */
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slide-up {
+            0% {
+                bottom: -100%; /* Start completely off-screen */
+            }
+            100% {
+                bottom: 0; /* End at normal position */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="container">
+        <h1>Carbon Cutters</h1>
+        <p>Welcome to the Carbon Cutters Carpooling Quiz</p>
+        <div class="button-group">
+            <button class="quiz-button" onclick="startQuiz()" aria-label="Start Quiz">Start</button>
+            <button class="quiz-button" onclick="showRules()" aria-label="View Rules">Rules</button>
+        </div>
+    </div>
+    <script>
+        function startQuiz() {
+            // Redirect to the quiz page
+            window.location.href = 'startQuiz.html';
+        }
+
+        function showRules() {
+            // Redirect to the rules page
+            window.location.href = 'rules.html';
+        }
+    </script>
+</body>
+</html>
