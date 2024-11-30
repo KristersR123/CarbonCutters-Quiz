@@ -178,34 +178,34 @@
     <script>
         const quizData = [
             {
-                question: "What percentage of TUS respondents said they would be interested in carpooling?",
-                answers: ["40%", "69%", "57%", "22%"],
+                question: "How many carpooling parking spaces are available in the Moylish Campus?",
+                answers: ["0", "10", "20", "30"],
+                correctIndex: 1,
+                funFact: "The Moylish Campus has 10 parking spaces alocated for carpooling, However they are not setup properly yet as of 28/11/24"
+            },
+            {
+                question: "What percentage of students are within 5km from the Moylish Campus",
+                answers: ["27%", "32%", "37%", "42%"],
                 correctIndex: 2,
-                funFact: "if 57% of the respondants (237) began carpooling in groups of 3 it would save up to 165,401 kg - 237,150 kg CO₂ over the course of the academic year."
+                funFact: "63% of students have to commute to the moylish campus, there is a high chance that perticipents can commute together to the Campus"
             },
             {
-                question: "What percentage of TUS respondents use a single-occupant car to commute to campus?",
-                answers: ["33%", "29%", "39%", "18%"],
-                correctIndex: 0,
-                funFact: "33% of TUS use single use cars and on average travel 40-100km to campus. This causes anywhere between 14-18kg of CO2 emissions"
+                question: "What percentage of students live within 400 meaters from a bus stop that goes to the Moylish Campus",
+                answers: ["68%", "72%", "75%", "88%"],
+                correctIndex: 1,
+                funFact: "There is 1 offical bus service thaat goes to the Moylish campus, which local bus service that does not leave the city"
             },
             {
-                question: "True or False: Over half of the survey respondents showed an interest in carpooling as either a driver or a passenger.",
-                answers: ["True", "False"],
-                correctIndex: 0,
-                funFact: "21% of respondants stated they could never find parking on campus. In TUS Moylish we have 10 designated spots for carpoolers"
-            },
-            {
-                question: "Which campus initiative might encourage more people to carpool?",
-                answers: ["Carpooling spaces", "Sustainable Travel Allowance", "Both"],
+                question: "What percent of emmisions are reduced per person while carpooling",
+                answers: ["0-5", "5-10", "10-15", "15-20"],
                 correctIndex: 2,
-                funFact: "Despite not having a Sustainable Travel Allowance, 88% of responders voted yes in favour of one"
+                funFact: "According to a study by UC Berkeley, car sharing reduces greenhouse gas emissions by 10 to 13 percent per user"
             },
             {
-                question: "Which of the following is a reason respondents might choose to carpool?",
-                answers: ["To save money on travel costs", "To share driving responsibilities", "To reduce environmental impact", "All of the above"],
-                correctIndex: 3,
-                funFact: "On longer journeys carpoolers save more. For instance on a 100km journey 3 carpooling students can save 27.50 each on fuel"
+            question: "What is the primary environmental benefit of carpooling to the Moylish Campus?",
+            answers: ["Reduced fuel consumption", "Lower greenhouse gas emissions", "Decreased traffic congestion", "Improved public health"],
+            correctIndex: 1,
+            funFact: "Carpooling reduces greenhouse gas emissions significantly. Sharing a car with others also reduces the number of vehicles on the road, leading to decreased fuel consumption and better air quality."
             }
         ];
 
@@ -232,7 +232,7 @@
                 answersContainer.appendChild(answerButton);
             });
 
-            nextButton.textContent = currentQuestionIndex === quizData.length - 1 ? "Play Challenge" : "Next Question";
+            nextButton.textContent = currentQuestionIndex === quizData.length - 1 ? "View Score" : "Next Question";
         }
 
         function handleAnswer(selectedIndex, correctIndex, funFact) {
@@ -265,7 +265,7 @@
         loadQuestion();
         nextButton.style.display = 'none'; 
     } else {
-        window.location.href = "challenge.html";
+        window.location.href = "Score.html";
     }
         });
 

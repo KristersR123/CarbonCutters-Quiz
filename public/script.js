@@ -76,8 +76,8 @@ function updateEmissions() {
                                                     `<strong>Savings by current setup:</strong> ${savings.toFixed(2)} kg CO2`;
 }
 
-function goToNextChallenge() {
-    window.location.href = 'nextChallenge.html'; // Redirect to next challenge
+function goToNext() {
+    window.location.href = 'finalQuiz.html'; // Redirect to next challenge
 }
 
 function resetGame() {
