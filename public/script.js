@@ -10,94 +10,106 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
+// Variables for score tracking
+let carpoolScore = 0;
+const maxCarpoolScore = 30; // Maximum carpool score
+const startQuizScore = parseInt(localStorage.getItem('startQuizScore')) || 0; // Retrieved from startQuiz
+
+// DOM elements
+const scoreDisplay = document.getElementById('score-display');
+const continueBtn = document.getElementById('continue-btn');
+
+// Initialize score display
+scoreDisplay.textContent = `Current Score: ${startQuizScore}`;
+
+// Function to allow dropping elements
 function allowDrop(event) {
     event.preventDefault();
 }
 
+// Function for dragstart event
 function drag(event) {
-    event.dataTransfer.setData("text", event.target.id);
+    event.dataTransfer.setData('text', event.target.id);
 }
 
-// Additional checks to ensure correct behavior on subsequent attempts
+// Function to handle the drop event
 function drop(event) {
     event.preventDefault();
-    var data = event.dataTransfer.getData("text");
-    var person = document.getElementById(data);
-    var target = event.target;
+    const personId = event.dataTransfer.getData('text');
+    const person = document.getElementById(personId);
+    const car = event.target.closest('.car');
+    const occupants = parseInt(car.getAttribute('data-occupants'));
 
-    if (target.className.includes("car") && !target.classList.contains('locked')) {
-        if (target.children.length < 2) {
-            target.appendChild(person);
-            updateEmissions();
-            if (target.children.length === 2) {
-                lockOtherCar(target);
-                document.getElementById('successSound').play();
-                document.querySelector('.game-container').classList.add('success-background');
-                setTimeout(() => {
-                    document.getElementById('next-button').style.display = 'inline-block';  // Show the "Next" button after all transitions are complete
-                }, 500);  // Delay to ensure the background change and sound are noticed
-            }
-            // Check if both drivers are now in one car
-            if (target.children.length === 2 && (target.children[0].id !== target.children[1].id)) {
-                alert("Congratulations! You have saved emissions by carpooling :)");
-            }
-        } else {
-            alert("This car is full.");
+    // Check if the car can accept another person
+    if (car && occupants < 2 && person) {
+        car.setAttribute('data-occupants', occupants + 1); // Increment occupants
+        person.style.display = 'none'; // Hide the person after they enter the car
+
+        // Update car image based on occupants
+        if (occupants + 1 === 1) {
+            car.src = 'images/person_in_car.png'; // Car with one person
+        } else if (occupants + 1 === 2) {
+            car.src = 'images/car_with_two_people.png'; // Car with two people
         }
+
+        updateScore(); // Recalculate the score
+        checkAllPlaced(); // Check if all people are placed
+    } else {
+        console.log('Invalid drop or car is full!');
     }
 }
 
-// Make sure that locking other cars doesn't prevent future correct interactions
-function lockOtherCar(filledCar) {
+// Function to update the score
+function updateScore() {
+    carpoolScore = 0; // Reset carpool score
     const cars = document.querySelectorAll('.car');
-    cars.forEach(car => {
-        if (car.id !== filledCar.id) {
-            car.classList.add('locked');  // Lock the other cars
-        }
-    });
-}
 
-function updateEmissions() {
-    const cars = document.querySelectorAll('.car');
-    const distance = 100; // Assuming distance traveled
-    const emissionsPerKmPerCar = 0.24; // Emissions per km per car
-
-    let totalEmissions = 0;
+    // Award points only for cars with exactly two people
     cars.forEach(car => {
-        if (car.children.length > 0) {
-            totalEmissions += emissionsPerKmPerCar * distance;
+        const occupants = parseInt(car.getAttribute('data-occupants'));
+        if (occupants === 2) {
+            carpoolScore += 10; // 10 points per car with two people
         }
     });
 
-    let potentialEmissions = cars.length * emissionsPerKmPerCar * distance; // Emissions if both drove separately
-    let savings = potentialEmissions - totalEmissions;
-    document.getElementById('results').innerHTML = `<strong>Emissions with current setup:</strong> ${totalEmissions.toFixed(2)} kg CO2<br>` +
-                                                    `<strong>Potential emissions if driving separately:</strong> ${potentialEmissions.toFixed(2)} kg CO2<br>` +
-                                                    `<strong>Savings by current setup:</strong> ${savings.toFixed(2)} kg CO2`;
+    carpoolScore = Math.min(carpoolScore, maxCarpoolScore); // Cap score at 30
+    const totalScore = startQuizScore + carpoolScore;
+
+    scoreDisplay.textContent = `Current Score: ${totalScore}`;
 }
 
-function goToNext() {
-    window.location.href = 'finalQuiz.html'; // Redirect to next challenge
+// Function to check if all people are placed
+function checkAllPlaced() {
+    const allPeoplePlaced = Array.from(document.querySelectorAll('#top-bar img')).every(person => person.style.display === 'none');
+    if (allPeoplePlaced) {
+        continueBtn.disabled = false; // Enable the "Continue" button
+        continueBtn.style.display = 'inline-block'; // Show the button
+    }
 }
 
-function resetGame() {
-    const people = document.getElementById('people');
-    const cars = document.querySelectorAll('.car');
+// Add event listeners for drag-and-drop
+document.addEventListener('DOMContentLoaded', function () {
+    const persons = document.querySelectorAll('#top-bar img'); // All draggable people
+    const cars = document.querySelectorAll('.car'); // All cars
 
-    // Move all person elements back to the people container and unlock cars
-    cars.forEach(car => {
-        Array.from(car.children).forEach(child => {
-            if (child.classList.contains('person')) {
-                people.appendChild(child);  // Move person back to the starting area
-            }
-        });
-        car.classList.remove('locked');  // Unlock the car
+    // Initialize cars with 0 occupants
+    cars.forEach(car => car.setAttribute('data-occupants', '0'));
+
+    // Attach dragstart events to people
+    persons.forEach(person => {
+        person.addEventListener('dragstart', drag);
     });
 
-    // Reset visual elements and hide the "Next" button
-    document.querySelector('.game-container').classList.remove('success-background');
-    document.getElementById('results').textContent = '';  // Clear results text
-    document.getElementById('next-button').style.display = 'none';  // Hide the "Next" button
+    // Attach dragover and drop events to cars
+    cars.forEach(car => {
+        car.addEventListener('dragover', allowDrop);
+        car.addEventListener('drop', drop);
+    });
 
-    // Optionally, reset emissions data or any other visual feedback
-}
+    // Handle "Continue" button click
+    continueBtn.addEventListener('click', function () {
+        const totalScore = startQuizScore + carpoolScore;
+        localStorage.setItem('finalScore', totalScore); // Save the total score to localStorage
+        window.location.href = 'finalQuiz.html'; // Redirect to the next page
+    });
+});

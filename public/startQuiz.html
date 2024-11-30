@@ -211,6 +211,8 @@
 
         let currentQuestionIndex = 0;
 
+        let score = 0; // Initialize score
+
         const questionText = document.getElementById('question-text');
         const answersContainer = document.getElementById('answers-container');
         const funFactContainer = document.getElementById('fun-fact');
@@ -251,13 +253,15 @@
         }
     });
 
+    if (selectedIndex === correctIndex) {
+        score += 5; // Add 5 points for correct answer
+    }
+
+
     funFactContainer.textContent = funFact;
 
     nextButton.style.display = 'inline-block';
 }
-
-
-
 
         nextButton.addEventListener('click', () => {
     currentQuestionIndex++;
@@ -265,7 +269,8 @@
         loadQuestion();
         nextButton.style.display = 'none'; 
     } else {
-        window.location.href = "challenge.html";
+        localStorage.setItem('score', score); // Save score to localStorage
+        window.location.href = "challenge.html"; // Redirect to challenge page
     }
         });
 
