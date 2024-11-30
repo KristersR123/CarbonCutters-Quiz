@@ -158,7 +158,6 @@
                 bottom: 0;
             }
         }
-
     </style>
 </head>
 <body>
@@ -175,8 +174,6 @@
             <div class="fun-fact" id="fun-fact"></div>
             <button id="next-button" style="display:none;">Next Question</button>
         </div>
-
-    </div>
     </div>
     <script>
         const quizData = [
@@ -243,12 +240,16 @@
             const answerButtons = answersContainer.querySelectorAll('.answer');
 
             answerButtons.forEach((button, index) => {
-                button.disabled = true;
+                    button.disabled = true;
                 if (index === correctIndex) {
                     button.classList.add('correct');
+                    button.style.display = 'block';
                 } else if (index === selectedIndex) {
-                    button.classList.add('incorrect');
-                }
+                    button.classList.add('incorrect'); 
+                    button.style.display = 'block';
+                } else {
+                    button.style.display = 'none'; 
+            }
             });
 
             funFactContainer.textContent = funFact;
