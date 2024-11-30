@@ -27,6 +27,28 @@ body {
     background-size: 120%;
 }
 
+/* Description at the top */
+#description {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        text-align: center;
+        font-size: 1.5rem;
+        color: #333;
+        font-family: 'Bebas Neue', sans-serif;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+    }
+
+#description p {
+    margin: 0;
+}
+
+#description .hint {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #007bff;
+}
+
 /* Top bar for people */
 #top-bar {
     width: 100%;
@@ -108,6 +130,14 @@ body {
 
 /* Media query for smaller devices */
 @media (max-width: 768px) {
+    #description {
+            font-size: 1.2rem;
+        }
+
+    #description .hint {
+            font-size: 1rem;
+    }
+
     #top-bar {
         height: 12%;
     }
@@ -138,6 +168,12 @@ body {
 </head>
 
 <body>
+
+    <!-- Description Section -->
+    <div id="description">
+        <p><strong>Please drag & drop each person into a car to reduce emissions!</strong></p>
+        <p class="hint">Hint: Fewer cars traveling with just one person save fewer emissions. Try sharing cars to maximize your score!</p>
+    </div>
 
     <!-- Top Bar for People -->
     <div id="top-bar">
