@@ -3,7 +3,7 @@
 Involvement:
 - Design + index.html + rules.html = Eoghan Russell (K00260663)
 - startQuiz.html + Data gathering for quiz + involved in implementation planning = Jason Price (K00268716)
-- Quiz's Logic Implementation + challenge.html + viewScore.html + Linking all together = Kristers Rakstins (K00273773)
+- Quiz's Challenge Logic Implementation + challenge.html + viewScore.html + Linking all together = Kristers Rakstins (K00273773)
 - finalQuiz.html + Data gathering for quiz + invovled in implementation planning = Laimis Mikulskis (K00273589)
 
 References:
